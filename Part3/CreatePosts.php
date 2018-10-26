@@ -9,18 +9,18 @@
     exit();
   }
 
-  $userQuery = "SELECT user_id FROM Users where user_id='$userid'";
-  $userCheckQuery = $mysqli->query($userQuery);
+  $userQuery = "SELECT user_id FROM Users where user_id=('$userid')";
+  $userCheck = $mysqli->query($userQuery);
 
-  if($userCheckQuery->fetch_assoc())
+  if($userCheck->fetch_assoc())
   {
-    $insertPostQuery = "INSERT INTO Posts (author_id, content) VALUES ('" . $username . "','" . $text . "')";
-    $mysqli->query($insertPostQuery);
-    echo "A post was created by " . $username . "!";
+    $addPost = "INSERT INTO Posts (author_id, content) VALUES ('$userid', '$text')";
+    $mysqli->query($addPost);
+    echo "A post was successfully added by " . $userid . ".";
   }
   else
   {
-    echo "Error: the username " . $username . " does not exist.";
+    echo "Error: User ID " . $userid . " does not exist.";
   }
 
   $userSearchResult->free();
